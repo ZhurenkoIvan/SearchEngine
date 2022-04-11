@@ -19,37 +19,8 @@ public class DefaultController {
     @Autowired
     LemmaService lemmaService;
 
-    @GetMapping("/admin/statistics")
-    public Result statistics(){
-        System.out.println("Дошло до статистики");
-        Result result = new Result();
-        Total total = new Total();
-        total.setIndexing(false);
-        total.setLemmas(1000000);
-        total.setPages(20303);
-        total.setSites(1);
-        Detailed detailed = new Detailed();
-        detailed.setError("Ошибка");
-        detailed.setName("Playback");
-        detailed.setStatus(Status.INDEXED);
-        detailed.setLemmas(1000000);
-        detailed.setStatusTime(1600160357);
-        detailed.setPages(20303);
-        detailed.setUrl("http://www.playback.ru/");
-        Statistics statistics = new Statistics();
-        statistics.setTotal(total);
-        ArrayList<Detailed> detaileds = new ArrayList<>();
-        detaileds.add(detailed);
-        statistics.setDetailed(detaileds);
-        result.setResult(true);
-        result.setStatistics(statistics);
-        return result;
-
-    }
-
     @GetMapping("/admin")
     public String startPage(){
-        System.out.println("Запрос получен");
         return "index";
     }
 
