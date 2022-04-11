@@ -1,10 +1,22 @@
 package searchEngineApp;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import searchEngineApp.DTO.LinkInfoDTO;
+import searchEngineApp.entity.Page;
+import searchEngineApp.service.IndexService;
+import searchEngineApp.service.LemmaService;
+import searchEngineApp.supporting_classes.Lemmatizator;
+import searchEngineApp.supporting_classes.LinkParser;
+import searchEngineApp.supporting_classes.Searcher;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ForkJoinPool;
 
 @SpringBootApplication
 public class Main {
@@ -13,29 +25,17 @@ public class Main {
 
 //        LinkParser parser = new LinkParser("http://www.playback.ru/");
 //        ForkJoinPool forkJoinPool = new ForkJoinPool();
-//        forkJoinPool.invoke(parser);
-//
-//        LemmaParser lemmaParser = new LemmaParser();
-//        lemmaParser.addLemmas();
-//
-//        Indexer indexer = new Indexer();
+//        List<Page> pageList = forkJoinPool.invoke(parser);
+//        pageList.forEach(System.out::println);
+
+
+
+////
+//        IndexService indexer = new IndexService();
 //        indexer.addIndexes();
 //
 //        Searcher searcher = new Searcher();
-//        ArrayList<LinkInfo> linksList = searcher.listOfLinks("Купить смартфон apple");
+//        ArrayList<LinkInfoDTO> linksList = searcher.listOfLinks("Купить смартфон apple");
 //        linksList.forEach(System.out::println);
-
-//        String text = "Повторное появление леопарда в Осетии позволяет предположить, что леопард ПОСТоянно обитает в НЕКОТОРЫХ райоНАх Северного Кавказа.";
-//        Lemmatizator lemmatizator = new Lemmatizator(text);
-//        HashMap<String, Integer> map = lemmatizator.morphText();
-//        for (String key : map.keySet()) {
-//            System.out.println(key + " - " + map.get(key));
-//        }
-
-//        Document doc = Jsoup.connect("http://www.playback.ru/")
-//                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-//                .referrer("http://www.google.com")
-//                .get();
-//        System.out.println(doc.text());
     }
 }
