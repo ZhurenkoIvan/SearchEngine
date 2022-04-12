@@ -18,19 +18,22 @@ public class LinkParser extends RecursiveTask<List<Page>> {
     private final String URL;
     private String path ="/";
     private final List<Page> pageList;
+    private final int siteId;
 
 
-    public LinkParser(String url) {
-        this.URL = url.substring(0, url.length()-1);
+    public LinkParser(String url, int siteId) {
+        this.URL = url;
         this.pageList = Collections.synchronizedList(new ArrayList<Page>());
         this.allUrls = Collections.synchronizedSet(new HashSet<>());
+        this.siteId = siteId;
     }
 
-    private LinkParser(String url, String path, List<Page> pageList, Set<String> allUrls) {
+    private LinkParser(String url, String path, List<Page> pageList, Set<String> allUrls, int siteId) {
         this.URL = url;
         this.path = path;
         this.pageList = pageList;
         this.allUrls = allUrls;
+        this.siteId = siteId;
     }
 
     @Override
@@ -52,9 +55,10 @@ public class LinkParser extends RecursiveTask<List<Page>> {
                     page.setPath(path);
                     page.setCode(code);
                     page.setContent(doc.html());
+                    page.setSiteId(siteId);
                     pageList.add(page);
                     allUrls.add(path);
-                    LinkParser searcher = new LinkParser(this.URL, path, pageList, allUrls);
+                    LinkParser searcher = new LinkParser(this.URL, path, pageList, allUrls, siteId);
                     searcher.fork();
                     searcher.join();
                 }

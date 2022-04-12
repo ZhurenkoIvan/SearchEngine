@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import searchEngineApp.entity.Lemma;
 import searchEngineApp.entity.Page;
+import searchEngineApp.entity.Site;
 import searchEngineApp.repo.LemmaRepo;
 import searchEngineApp.repo.PageRepo;
 import searchEngineApp.supporting_classes.Lemmatizator;
@@ -13,6 +14,7 @@ import searchEngineApp.supporting_classes.Lemmatizator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Берет данные из столбца content таблицы page и вычленяет леммы
@@ -27,11 +29,7 @@ public class LemmaService {
     @Autowired
     private LemmaRepo lemmaRepo;
 
-    @Autowired
-    private PageRepo pageRepo;
-
-    public void addLemmas() throws IOException {
-        ArrayList<Page> pages = (ArrayList<Page>) pageRepo.findAll();
+    public List<Lemma> addLemmas(List<Page> pages, Site entity) throws IOException {
         HashMap<String, Lemma> lemmasMap = new HashMap<>();
         for(Page page : pages) {
             System.out.println("Страничка " + page.getId() + " пошла");
@@ -44,6 +42,7 @@ public class LemmaService {
                 if (lemmasMap.containsKey(key)) {
                     lemma.setLemma(key);
                     lemma.setFrequency(lemmasMap.get(key).getFrequency());
+                    lemma.setSiteId(entity.getId());
                     lemmasMap.put(key, lemma);
                 }else {
                     lemma.setLemma(key);
@@ -56,6 +55,6 @@ public class LemmaService {
         for (String key: lemmasMap.keySet()){
             lemmaList.add(lemmasMap.get(key));
         }
-        lemmaRepo.saveAll(lemmaList);
+        return lemmaRepo.saveAll(lemmaList);
     }
 }

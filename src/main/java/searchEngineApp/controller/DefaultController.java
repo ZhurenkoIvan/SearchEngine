@@ -23,20 +23,4 @@ public class DefaultController {
     public String startPage(){
         return "index";
     }
-
-    @GetMapping("/lemma")
-    public String lemma() {
-        try {
-            lemmaService.addLemmas();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "index";
-    }
-
-    @GetMapping("/index")
-    public String index() {
-        return "index";
-    }
-
 }

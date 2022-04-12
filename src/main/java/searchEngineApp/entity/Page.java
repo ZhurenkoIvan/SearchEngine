@@ -17,4 +17,5 @@ public class Page {
     private String path;
     private int code;
     private String content;
+    private int siteId;
 }

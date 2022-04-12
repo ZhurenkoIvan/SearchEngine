@@ -17,6 +17,7 @@ public class Lemma {
     private int id;
     private String lemma;
     private int frequency;
+    private int siteId;
 
     @Override
     public boolean equals(Object o) {
