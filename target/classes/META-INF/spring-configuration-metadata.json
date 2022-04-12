@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "site",
+      "type": "searchEngineApp.DTO.SiteDTO",
+      "sourceType": "searchEngineApp.DTO.SiteDTO"
+    },
+    {
+      "name": "sites",
+      "type": "searchEngineApp.DTO.SitesList",
+      "sourceType": "searchEngineApp.DTO.SitesList"
+    }
+  ],
+  "properties": [
+    {
+      "name": "site.name",
+      "type": "java.lang.String",
+      "sourceType": "searchEngineApp.DTO.SiteDTO"
+    },
+    {
+      "name": "site.url",
+      "type": "java.lang.String",
+      "sourceType": "searchEngineApp.DTO.SiteDTO"
+    },
+    {
+      "name": "sites.site-d-t-o-s",
+      "type": "java.util.ArrayList<searchEngineApp.DTO.SiteDTO>",
+      "sourceType": "searchEngineApp.DTO.SitesList"
+    }
+  ],
+  "hints": []
+}
