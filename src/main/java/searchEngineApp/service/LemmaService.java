@@ -12,9 +12,7 @@ import searchEngineApp.repo.PageRepo;
 import searchEngineApp.supporting_classes.Lemmatizator;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Берет данные из столбца content таблицы page и вычленяет леммы
@@ -31,6 +29,7 @@ public class LemmaService {
 
     public List<Lemma> addLemmas(List<Page> pages, Site entity) throws IOException {
         HashMap<String, Lemma> lemmasMap = new HashMap<>();
+        lemmaRepo.deleteAllBySiteId(entity.getId());
         for(Page page : pages) {
             System.out.println("Страничка " + page.getId() + " пошла");
             //Добавление лемм
@@ -52,9 +51,11 @@ public class LemmaService {
             }
         }
         ArrayList<Lemma> lemmaList = new ArrayList<>();
+
         for (String key: lemmasMap.keySet()){
             lemmaList.add(lemmasMap.get(key));
         }
+
         return lemmaRepo.saveAll(lemmaList);
     }
 }

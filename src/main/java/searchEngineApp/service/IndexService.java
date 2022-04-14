@@ -33,10 +33,11 @@ public class IndexService {
 
 
     public void addIndexes(List<Lemma> lemmasList, List<Page> pages) throws SQLException, IOException {
+        indexRepo.deleteAllBySiteId(pages.get(0).getSiteId());
         ArrayList<Field> fields = (ArrayList<Field>) fieldRepo.findAll();
         HashMap<String, Integer> lemmas = new HashMap<>();
         for (Lemma lemma : lemmasList) {
-            lemmas.put(lemma.getLemma(), lemma.getFrequency());
+            lemmas.put(lemma.getLemma(), lemma.getId());
         }
         for (Page page : pages) {
             Document contentDoc = Jsoup.parse(page.getContent());
@@ -62,6 +63,7 @@ public class IndexService {
             index.setRank(rank);
             index.setLemmaId(lemma_id);
             index.setPageId(page.getId());
+            index.setSiteId(page.getSiteId());
             indexes.add(index);
         }
     }

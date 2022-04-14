@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Total {
     private int sites;
-    private int pages;
-    private int lemmas;
+    private long pages;
+    private long lemmas;
     private boolean isIndexing;
 }

@@ -4,4 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import searchEngineApp.entity.Index;
 
 public interface IndexRepo extends JpaRepository<Index, Integer> {
+    void deleteAllBySiteId(int siteId);
 }

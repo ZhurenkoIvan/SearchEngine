@@ -8,10 +8,7 @@ import searchEngineApp.entity.Site;
 import searchEngineApp.repo.PageRepo;
 import searchEngineApp.supporting_classes.LinkParser;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 
@@ -21,13 +18,12 @@ public class PageService {
     @Autowired
     private PageRepo pageRepo;
 
-    public List<Page> addPages(SiteDTO site, Site entity) {
-
+    public List<Page> addPages(Site entity) {
+        pageRepo.deleteAllBySiteId(entity.getId());
         LinkParser parser = new LinkParser(entity);
         ForkJoinPool forkJoinPool = new ForkJoinPool();
-        Set<Page> pageSet = forkJoinPool.invoke(parser);
-        List<Page> pageList = new ArrayList<>(pageSet);
-        pageList = pageRepo.saveAll(pageList);
-        return pageList;
+        Set<Page> setPages = forkJoinPool.invoke(parser);
+        List<Page> listPages = pageRepo.saveAllAndFlush(setPages);
+        return listPages;
     }
 }

@@ -4,7 +4,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.stereotype.Component;
 import searchEngineApp.entity.Page;
 import searchEngineApp.entity.Site;
 
@@ -17,7 +16,9 @@ import java.util.regex.Pattern;
 /**
  * Проходит по всем ссылкам на сайте и парсит их в таблицу page
  */
+
 public class LinkParser extends RecursiveTask<Set<Page>> {
+
     private final Set<String> allUrls;
     private String path = "/";
     private final Set<Page> pageList;
@@ -76,6 +77,7 @@ public class LinkParser extends RecursiveTask<Set<Page>> {
         page.setCode(code);
         page.setContent(doc.html());
         page.setSiteId(entity.getId());
+
         pageList.add(page);
         allUrls.add(path);
         LinkParser searcher = new LinkParser(path, pageList, allUrls, entity);

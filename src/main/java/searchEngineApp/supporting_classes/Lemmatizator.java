@@ -25,7 +25,7 @@ public class Lemmatizator {
     public HashMap<String, Integer> getLemmas () throws IOException {
         HashSet<String> engWords = new HashSet<>();
         HashSet<String> rusWords = new HashSet<>();
-        Pattern pEng = Pattern.compile("[A-z]{2,}");
+        Pattern pEng = Pattern.compile("[A-Za-z]{2,}");
         Pattern pRus = Pattern.compile("[А-яёЁ]{2,}");
         Matcher engMatcher = pEng.matcher(text);
         Matcher rusMatcher = pRus.matcher(text);

@@ -19,9 +19,6 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
-
 @Service
 public class MainService {
 
@@ -77,13 +74,17 @@ public class MainService {
     }
 
     private Site createSiteEntity(SiteDTO site) {
-        Site entity = new Site();
-        entity.setStatus(Status.INDEXING);
-        entity.setLastError(null);
-        entity.setStatusTime(new Date(System.currentTimeMillis()));
-        entity.setUrl(site.getUrl());
-        entity.setName(site.getName());
-        entity = siteRepo.save(entity);
+
+        Site entity = siteRepo.findByUrl(site.getUrl());
+        if (entity == null) {
+            entity = new Site();
+            entity.setStatus(Status.INDEXING);
+            entity.setLastError(null);
+            entity.setStatusTime(new Date(System.currentTimeMillis()));
+            entity.setUrl(site.getUrl());
+            entity.setName(site.getName());
+            entity = siteRepo.saveAndFlush(entity);
+        }
         return entity;
     }
 
@@ -106,7 +107,7 @@ public class MainService {
         public void run() {
             try {
                 Site entity = createSiteEntity(site);
-                List<Page> pages = pageService.addPages(site, entity);
+                List<Page> pages = pageService.addPages(entity);
                 List<Lemma> lemmas = lemmaService.addLemmas(pages, entity);
                 indexService.addIndexes(lemmas, pages);
             } catch (SQLException e) {
@@ -116,6 +117,10 @@ public class MainService {
                 serviceResult.setResult("false");
                 serviceResult.setError("Input output exception");
             }
+        }
+
+        public ServiceResult getServiceResult() {
+            return serviceResult;
         }
     }
 }

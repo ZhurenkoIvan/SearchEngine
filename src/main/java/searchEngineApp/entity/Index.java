@@ -17,4 +17,5 @@ public class Index {
     private int lemmaId;
     @Column(name = "_rank")
     private float rank;
+    private int siteId;
 }
